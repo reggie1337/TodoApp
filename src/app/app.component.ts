@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
     this.Tasks = [];
   }
   taskFinished() {
-    const task = this.Tasks;
     this.Tasks.forEach((task) => {
       task.weDone = true;
     });
