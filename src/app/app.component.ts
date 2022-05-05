@@ -37,5 +37,15 @@ export class AppComponent implements OnInit {
     const index = this.Tasks.findIndex((t) => t.id === task.id);
     this.Tasks.splice(index, 1);
   }
+  taskClear() {
+    this.Tasks = [];
+  }
+  taskFinished() {
+    const task = this.Tasks;
+    this.Tasks.forEach((task) => {
+      task.weDone = true;
+    });
+  }
+
   ngOnInit(): void {}
 }
