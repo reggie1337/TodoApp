@@ -1,7 +1,14 @@
 <nav class="navbar navbar-defualt">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="" class="navbar-brand">TodoReduex</a>
+      <a class="navbar-brand">TodoReduex</a>
+      <nav>
+        <a class="button" routerLink="" routerLinkActive="activebutton">home</a>
+        <a class="button" routerLink="/delete" routerLinkActive="activebutton"
+          >delete</a
+        >
+      </nav>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </nav>
@@ -10,7 +17,7 @@
   <button class="btn btn-success m-1" type="button" (click)="taskFinished()">
     all task c/w
   </button>
-  <button class="btn btn-danger m-1" type="button" (click)="taskClear()">
+  <button class="btn btn-danger m-1" type="button" (click)="deleteAllTasks()">
     clear form
   </button>
   <div class="row">
@@ -20,7 +27,7 @@
         type="text"
         formControlName="task"
         class="form-control"
-        placeholder="just fucking kill me"
+        placeholder="insert some juicy words here"
       />
     </div>
     <div class="form-group col-sm-6">
@@ -57,7 +64,7 @@
   <div class="row">
     <div class="col-sm-12">
       <ul>
-        <li *ngFor="let tas of Tasks">
+        <li *ngFor="let tas of tasks">
           <div *ngIf="!tas.weDone; else elseBlock">
             {{ tas.task }}-<em>{{ tas.date }}</em>
           </div>

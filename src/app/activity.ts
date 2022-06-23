@@ -3,4 +3,5 @@ export interface Activity {
   date?: Date;
   weDone: boolean;
   id: number;
+  isDeleted: boolean;
 }

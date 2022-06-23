@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { findIndex } from 'rxjs/operators';
+import { filter } from 'rxjs';
 import { Activity } from './activity';
 
 @Component({
@@ -9,7 +9,7 @@ import { Activity } from './activity';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  Tasks: Activity[] = [];
+  tasks: Activity[] = [];
   currentIndex = 0;
   form = this.fb.group({
     task: ['', Validators.required],
@@ -20,11 +20,12 @@ export class AppComponent implements OnInit {
 
   newTask() {
     console.log(this.form.get('task')?.value);
-    this.Tasks.push({
+    this.tasks.push({
       task: this.form.get('task')?.value,
       date: this.form.get('date')?.value,
       weDone: false,
       id: this.currentIndex,
+      isDeleted: false,
     });
     this.currentIndex++;
   }
@@ -34,14 +35,18 @@ export class AppComponent implements OnInit {
   }
 
   taskDelete(task: Activity) {
-    const index = this.Tasks.findIndex((t) => t.id === task.id);
-    this.Tasks.splice(index, 1);
+    const index = this.tasks.findIndex((t) => t.id === task.id);
+    this.tasks.splice(index, 1);
+    task.isDeleted = true;
   }
-  taskClear() {
-    this.Tasks = [];
+  deleteAllTasks() {
+    //iterate over each task and update is deleted
+    for (let task of this.tasks) {
+      task.isDeleted = true;
+    }
   }
   taskFinished() {
-    this.Tasks.forEach((task) => {
+    this.tasks.forEach((task) => {
       task.weDone = true;
     });
   }
