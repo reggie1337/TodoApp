@@ -37,6 +37,10 @@ export class DashboardComponent implements OnInit {
     this.taskService.incompleteTask(task.id);
   }
 
+  clearAll() {
+    this.taskService.deleteAllTasks();
+  }
+
   ngOnInit(): void {
     this.taskService.tasks$
       .pipe(map((t) => t.filter((t) => !t.isDeleted)))

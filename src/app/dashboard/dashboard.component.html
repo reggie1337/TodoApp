@@ -16,6 +16,13 @@
               <input type="date" formControlName="date" />
             </div>
             <button class="btn btn-primary" type="submit">add</button>
+            <button
+              class="btn btn-danger m-1"
+              type="reset"
+              (click)="clearAll()"
+            >
+              clear all
+            </button>
             <ul>
               <li *ngFor="let tas of tasks">
                 <div *ngIf="!tas.weDone; else elseBlock">
