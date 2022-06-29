@@ -33,6 +33,9 @@ export class DashboardComponent implements OnInit {
   taskComplete(task: Activity): void {
     this.taskService.taskComplete(task.id);
   }
+  incompleteTask(task: Activity): void {
+    this.taskService.incompleteTask(task.id);
+  }
 
   ngOnInit(): void {
     this.taskService.tasks$

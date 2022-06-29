@@ -44,4 +44,10 @@ export class TaskService {
   deleteAllTasks() {
     this.tasks$.next([]);
   }
+  incompleteTask(id: number) {
+    const tasks = this.tasks$.getValue();
+    const index = tasks.findIndex((t) => t.id === id);
+    tasks[index].weDone = false;
+    this.tasks$.next(tasks);
+  }
 }
