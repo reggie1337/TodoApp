@@ -27,6 +27,13 @@ export class TaskService {
     this.tasks$.next(tasks);
   }
 
+  taskRestore(id: number) {
+    const tasks = this.tasks$.getValue();
+    const index = tasks.findIndex((t) => t.id === id);
+    tasks[index].isDeleted = false;
+    this.tasks$.next(tasks);
+  }
+
   taskDelete(id: number) {
     const tasks = this.tasks$.getValue();
     const index = tasks.findIndex((t) => t.id === id);

@@ -11,13 +11,12 @@
       {{ tas.task }}-<em>{{ tas.date }}</em>
     </div>
     <ng-template #elseBlock> {{ tas.task }}{{ tas.date }} </ng-template>
-    <!-- TODO: implement restore btn
     <button
-      class="btn btn-danger m-1"
-      type="button"
-      (click)="taskDelete(tas)"
+      class="btn btn-primary m-1"
+      type="submit"
+      (click)="taskRestore(tas)"
     >
-      delete
+      restore
     </button>
-  --></li>
+  </li>
 </ul>
