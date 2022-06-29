@@ -10,11 +10,7 @@
     <div *ngIf="tas.weDone; else elseBlock">
       {{ tas.task }}-<em>{{ tas.date }}</em>
     </div>
-    <ng-template #elseBlock>
-      <del
-        >{{ tas.tasks }}-<em>{{ tas.date }}</em></del
-      >
-    </ng-template>
+    <ng-template #elseBlock> {{ tas.task }}{{ tas.date }} </ng-template>
     <!-- TODO: implement restore btn
     <button
       class="btn btn-danger m-1"

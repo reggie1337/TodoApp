@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../task.service';
 import { Activity } from '../activity';
 import { map } from 'rxjs';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-delete',
   templateUrl: './delete.component.html',
