@@ -1,94 +1,12 @@
 <nav class="navbar navbar-defualt">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand">TodoReduex</a>
+      <a class="navbar-brand">TodoReduex!</a>
       <nav>
-        <a class="button" routerLink="" routerLinkActive="activebutton">home</a>
-        <a class="button" routerLink="/delete" routerLinkActive="activebutton"
-          >delete</a
-        >
+        <a class="button" routerLink="/">dashboard</a>
+        <a class="button" routerLink="/delete">delete</a>
       </nav>
-      <router-outlet></router-outlet>
     </div>
   </div>
 </nav>
-<form [formGroup]="form" (ngSubmit)="newTask()" class="container">
-  <div class="btn-group m-2 p-1"></div>
-  <button class="btn btn-success m-1" type="button" (click)="taskFinished()">
-    all task c/w
-  </button>
-  <button class="btn btn-danger m-1" type="button" (click)="deleteAllTasks()">
-    clear form
-  </button>
-  <div class="row">
-    <div class="col-sm-6 form-group">
-      <label for="name">Whats up</label>
-      <input
-        type="text"
-        formControlName="task"
-        class="form-control"
-        placeholder="insert some juicy words here"
-      />
-    </div>
-    <div class="form-group col-sm-6">
-      <label for="amount">Date</label>
-      <input
-        type="date"
-        formControlName="date"
-        id="name"
-        class="form-control"
-      />
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 mt-2">
-      <div class="btn-group">
-        <button
-          class="btn btn-success m-1"
-          type="submit"
-          [disabled]="!form.valid"
-        >
-          add
-        </button>
-        <button class="btn btn-danger m-1" type="reset">undo</button>
-      </div>
-    </div>
-  </div>
-</form>
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <hr />
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <ul>
-        <li *ngFor="let tas of tasks">
-          <div *ngIf="!tas.weDone; else elseBlock">
-            {{ tas.task }}-<em>{{ tas.date }}</em>
-          </div>
-          <ng-template #elseBlock>
-            <del
-              >{{ tas.task }}-<em>{{ tas.date }}</em></del
-            >
-          </ng-template>
-          <button
-            class="btn btn-success m-1"
-            type="button"
-            (click)="taskComplete(tas)"
-          >
-            done
-          </button>
-          <button
-            class="btn btn-danger m-1"
-            type="button"
-            (click)="taskDelete(tas)"
-          >
-            delete
-          </button>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+<router-outlet></router-outlet>
