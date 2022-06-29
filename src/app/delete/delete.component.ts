@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../task.service';
 import { Activity } from '../activity';
 import { map } from 'rxjs';
-import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-delete',
   templateUrl: './delete.component.html',
@@ -10,12 +9,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class DeleteComponent implements OnInit {
   tasks: Activity[] = [];
-  form = this.fb.group({
-    task: ['', Validators.required],
-    date: ['', Validators.required],
-  });
 
-  constructor(public taskService: TaskService, private fb: FormBuilder) {}
+  constructor(public taskService: TaskService) {}
 
   taskRestore(task: Activity) {
     this.taskService.taskRestore(task.id);
