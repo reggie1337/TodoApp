@@ -9,21 +9,20 @@ export class TaskService {
   currentIndex = 0;
 
   newTask(taskBody: string, taskDate: Date) {
-    const task: Activity = {
-      task: taskBody,
-      date: taskDate,
-      weDone: false,
+    const body: Activity = {
+      body: taskBody,
+      isComplete: false,
       id: this.currentIndex,
       isDeleted: false,
     };
-    this.tasks$.next([...this.tasks$.getValue(), task]);
+    this.tasks$.next([...this.tasks$.getValue(), body]);
     this.currentIndex++;
   }
 
   taskComplete(id: number) {
     const tasks = this.tasks$.getValue();
     const index = tasks.findIndex((t) => t.id === id);
-    tasks[index].weDone = true;
+    tasks[index].isComplete = true;
     this.tasks$.next(tasks);
   }
 
@@ -48,7 +47,7 @@ export class TaskService {
   incompleteTask(id: number) {
     const tasks = this.tasks$.getValue();
     const index = tasks.findIndex((t) => t.id === id);
-    tasks[index].weDone = false;
+    tasks[index].isComplete = false;
     this.tasks$.next(tasks);
   }
 }

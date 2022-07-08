@@ -1,7 +1,6 @@
 export interface Activity {
-  task: string;
-  date?: Date;
-  weDone: boolean;
+  body: string;
   id: number;
-  isDeleted: boolean;
+  isComplete: Boolean;
+  isDeleted: Boolean;
 }
