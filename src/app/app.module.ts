@@ -7,11 +7,13 @@ import { DeleteComponent } from './delete/delete.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent, DashboardComponent, DeleteComponent],
   imports: [
     BrowserModule,
     CommonModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
