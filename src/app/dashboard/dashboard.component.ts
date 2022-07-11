@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { Activity } from '../activity';
 import { TaskService } from '../task.service';
 import { FormBuilder, Form } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { map } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
+import { TodoApiService } from '../todo-api.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -17,7 +17,13 @@ export class DashboardComponent implements OnInit {
     date: ['', Validators.required],
   });
 
-  constructor(public taskService: TaskService, private fb: FormBuilder) {}
+  destroyed$ = new Subject<void>();
+
+  constructor(
+    public taskService: TaskService,
+    private fb: FormBuilder,
+    private _todoApi: TodoApiService
+  ) {}
 
   newTask() {
     this.taskService.newTask(
@@ -42,8 +48,13 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.taskService.tasks$
-      .pipe(map((t) => t.filter((t) => !t.isDeleted)))
-      .subscribe((tasks) => (this.tasks = tasks));
+    this._todoApi
+      .getTodos()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((data) => console.log(data));
+  }
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }

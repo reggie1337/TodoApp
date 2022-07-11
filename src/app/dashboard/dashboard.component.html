@@ -25,12 +25,12 @@
             </button>
             <ul>
               <li *ngFor="let tas of tasks">
-                <div *ngIf="!tas.weDone; else elseBlock">
-                  {{ tas.task }}-<em>{{ tas.date }}</em>
+                <div *ngIf="!tas.isComplete; else elseBlock">
+                  {{ tas.body }}-<em>{{ tas.date }}</em>
                 </div>
                 <ng-template #elseBlock>
                   <del
-                    >{{ tas.task }}-<em>{{ tas.date }}</em></del
+                    >{{ tas.body }}-<em>{{ tas.date }}</em></del
                   >
                 </ng-template>
 
