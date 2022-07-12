@@ -6,17 +6,15 @@ import { Activity } from './activity';
 })
 export class TaskService {
   tasks$ = new BehaviorSubject<Activity[]>([]);
-  currentIndex = 0;
 
-  newTask(taskBody: string, taskDate: Date) {
+  newTask(taskBody: string, taskDate: Date, taskId: number) {
     const body: Activity = {
       body: taskBody,
       isComplete: false,
-      id: this.currentIndex,
+      id: taskId,
       isDeleted: false,
     };
     this.tasks$.next([...this.tasks$.getValue(), body]);
-    this.currentIndex++;
   }
 
   taskComplete(id: number) {

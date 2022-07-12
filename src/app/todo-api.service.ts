@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DataResponse } from './data-response';
 import { Activity } from './activity';
@@ -16,7 +16,15 @@ export class TodoApiService {
     return this._http.get<DataResponse<Activity[]>>(`${env.api}/todo`);
   }
 
-  createTodo(todo: Activity): Observable<DataResponse<IdResponse>> {
-    return this._http.post<DataResponse<IdResponse>>(`${env.api}/todo`, todo);
+  createTodo(body: string): Observable<DataResponse<IdResponse>> {
+    const headerOptions = new HttpHeaders();
+    headerOptions.set('Content-Type', 'application/json');
+    return this._http.post<DataResponse<IdResponse>>(
+      `${env.api}/todo`,
+      {
+        Body: body,
+      },
+      { headers: headerOptions }
+    );
   }
 }

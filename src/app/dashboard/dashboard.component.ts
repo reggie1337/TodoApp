@@ -26,10 +26,13 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   newTask() {
-    this.taskService.newTask(
-      this.form.get('task')?.value,
-      this.form.get('date')?.value
-    );
+    this._todoApi.createTodo(this.form.get('task')?.value).subscribe((res) => {
+      this.taskService.newTask(
+        this.form.get('task')?.value,
+        this.form.get('date')?.value,
+        res.data.id
+      );
+    });
   }
 
   taskDelete(task: Activity): void {
