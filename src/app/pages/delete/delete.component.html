@@ -8,15 +8,22 @@
 <ul>
   <li *ngFor="let tas of tasks">
     <div *ngIf="tas.isComplete; else elseBlock">
-      {{ tas.body }}-<em>{{ tas.date }}</em>
+      {{ tas.body }}
     </div>
-    <ng-template #elseBlock> {{ tas.body }}{{ tas.date }} </ng-template>
+    <ng-template #elseBlock> {{ tas.body }}</ng-template>
     <button
       class="btn btn-primary m-1"
       type="submit"
       (click)="taskRestore(tas)"
     >
       restore
+    </button>
+    <button
+      class="btn btn-danger m-1"
+      type="submit"
+      (click)="permDelete(tas.id)"
+    >
+      delete?
     </button>
   </li>
 </ul>

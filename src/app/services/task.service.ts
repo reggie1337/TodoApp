@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Activity } from './activity';
+import { Activity } from '../models/activity';
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
   tasks$ = new BehaviorSubject<Activity[]>([]);
 
-  newTask(taskBody: string, taskDate: Date, taskId: number) {
+  newTask(taskBody: string, taskId: number) {
     const body: Activity = {
       body: taskBody,
       isComplete: false,
@@ -15,6 +15,10 @@ export class TaskService {
       isDeleted: false,
     };
     this.tasks$.next([...this.tasks$.getValue(), body]);
+  }
+
+  hydrateTasks(tasks: Activity[]) {
+    this.tasks$.next(tasks);
   }
 
   taskComplete(id: number) {

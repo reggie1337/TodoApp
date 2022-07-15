@@ -11,10 +11,6 @@
         />
         <div class="row">
           <div class="col-xs-12 mt-2">
-            <div class="form-group col-sm-6">
-              <label for="amount">date</label>
-              <input type="date" formControlName="date" />
-            </div>
             <button class="btn btn-primary" type="submit">add</button>
             <button
               class="btn btn-danger m-1"
@@ -26,12 +22,10 @@
             <ul>
               <li *ngFor="let tas of tasks">
                 <div *ngIf="!tas.isComplete; else elseBlock">
-                  {{ tas.body }}-<em>{{ tas.date }}</em>
+                  {{ tas.body }}
                 </div>
                 <ng-template #elseBlock>
-                  <del
-                    >{{ tas.body }}-<em>{{ tas.date }}</em></del
-                  >
+                  <del>{{ tas.body }}</del>
                 </ng-template>
 
                 <button

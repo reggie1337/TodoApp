@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Activity } from '../activity';
-import { TaskService } from '../task.service';
+import { Activity } from '../../models/activity';
+import { TaskService } from '../../services/task.service';
 import { FormBuilder, Form } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { map, Subject, takeUntil } from 'rxjs';
-import { TodoApiService } from '../todo-api.service';
+import { TodoApiService } from '../../services/todo-api.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,7 +14,6 @@ export class DashboardComponent implements OnInit {
   tasks: Activity[] = [];
   form = this.fb.group({
     task: ['', Validators.required],
-    date: ['', Validators.required],
   });
 
   destroyed$ = new Subject<void>();
@@ -26,13 +25,12 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   newTask() {
-    this._todoApi.createTodo(this.form.get('task')?.value).subscribe((res) => {
-      this.taskService.newTask(
-        this.form.get('task')?.value,
-        this.form.get('date')?.value,
-        res.data.id
-      );
-    });
+    this._todoApi
+      .createTodo(this.form.get('task')?.value)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
+        this.taskService.newTask(this.form.get('task')?.value, res.data.id);
+      });
   }
 
   taskDelete(task: Activity): void {
@@ -51,11 +49,21 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.taskService.tasks$
+      .pipe(
+        takeUntil(this.destroyed$),
+        map((t) => t.filter((t) => !t.isDeleted))
+      )
+      .subscribe((tasks) => (this.tasks = tasks));
+
     this._todoApi
       .getTodos()
       .pipe(takeUntil(this.destroyed$))
-      .subscribe((data) => console.log(data));
+      .subscribe((res) => {
+        this.taskService.hydrateTasks(res.data);
+      });
   }
+
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
