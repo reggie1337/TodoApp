@@ -1,41 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Activity } from '../../models/activity';
-import { map } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
 import { TodoApiService } from 'src/app/services/todo-api.service';
-import { FormBuilder, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-delete',
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.css'],
 })
-export class DeleteComponent implements OnInit {
+export class DeleteComponent implements OnInit, OnDestroy {
   tasks: Activity[] = [];
-  form = this.fb.group({
-    task: ['', Validators.required],
-  });
+  destroyed$ = new Subject<void>();
 
   constructor(
     public taskService: TaskService,
-    private _todoApi: TodoApiService,
-    private fb: FormBuilder
+    private _todoApi: TodoApiService
   ) {}
-
-  taskRestore(task: Activity) {
-    this.taskService.taskRestore(task.id);
-  }
 
   ngOnInit(): void {
     this.taskService.tasks$
       .pipe(map((t) => t.filter((t) => t.isDeleted)))
       .subscribe((tasks) => (this.tasks = tasks));
   }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
+  taskRestore(task: Activity) {
+    this.taskService.taskRestore(task.id);
+  }
+
   permDelete(id: number) {
-    this.taskService.tasks$
-      .pipe(map((t) => t.filter((t) => t.id)))
-      .subscribe((tasks) => (this.tasks = tasks));
-    this._todoApi.deleteTodo(id).subscribe((res) => {
-      this.taskService;
-    });
+    this._todoApi
+      .deleteTodo(id)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
+        this.taskService.permanentDelete(res.data.id);
+      });
   }
 }

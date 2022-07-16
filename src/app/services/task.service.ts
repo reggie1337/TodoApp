@@ -52,4 +52,11 @@ export class TaskService {
     tasks[index].isComplete = false;
     this.tasks$.next(tasks);
   }
+
+  permanentDelete(id: number) {
+    const tasks = this.tasks$.getValue();
+    const index = tasks.findIndex((t) => t.id === id);
+    tasks.splice(index, 1);
+    this.tasks$.next(tasks);
+  }
 }
