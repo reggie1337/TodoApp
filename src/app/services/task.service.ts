@@ -54,9 +54,10 @@ export class TaskService {
   }
 
   permanentDelete(id: number) {
-    const tasks = this.tasks$.getValue();
-    const index = tasks.findIndex((t) => t.id === id);
-    tasks.splice(index, 1);
+    let tasks = this.tasks$.getValue();
+    // const index = tasks.findIndex((t) => t.id === id);
+    // tasks.splice(index, 1);
+    tasks = tasks.filter((t) => t.id !== id);
     this.tasks$.next(tasks);
   }
 }
