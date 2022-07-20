@@ -35,11 +35,17 @@ export class DashboardComponent implements OnInit {
 
   taskDelete(task: Activity): void {
     this.taskService.taskDelete(task.id);
+
+    this._todoApi.editTodos(task);
   }
 
   taskComplete(task: Activity): void {
-    this.taskService.taskComplete(task.id);
+    task.isComplete = true;
+    this._todoApi.editTodos(task).subscribe(() => {
+      this.taskService.taskComplete(task.id);
+    });
   }
+
   incompleteTask(task: Activity): void {
     this.taskService.incompleteTask(task.id);
   }
