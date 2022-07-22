@@ -36,7 +36,9 @@ export class DashboardComponent implements OnInit {
   taskDelete(task: Activity): void {
     this.taskService.taskDelete(task.id);
 
-    this._todoApi.editTodos(task);
+    this._todoApi.editTodos(task).subscribe(() => {
+      this.taskService.taskDelete(task.id);
+    });
   }
 
   taskComplete(task: Activity): void {
@@ -48,6 +50,9 @@ export class DashboardComponent implements OnInit {
 
   incompleteTask(task: Activity): void {
     this.taskService.incompleteTask(task.id);
+    this._todoApi.editTodos(task).subscribe(() => {
+      this.taskService.incompleteTask(task.id);
+    });
   }
 
   clearAll() {

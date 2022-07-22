@@ -27,6 +27,9 @@ export class TodoApiService {
   }
 
   editTodos(task: Activity): Observable<DataResponse<IdResponse>> {
-    return this._http.put<DataResponse<IdResponse>>(`${env.api}/todo`, task);
+    return this._http.put<DataResponse<IdResponse>>(
+      `${env.api}/todo/${task.id}`,
+      task
+    );
   }
 }

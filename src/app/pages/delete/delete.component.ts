@@ -31,6 +31,9 @@ export class DeleteComponent implements OnInit, OnDestroy {
 
   taskRestore(task: Activity) {
     this.taskService.taskRestore(task.id);
+    this._todoApi.editTodos(task).subscribe(() => {
+      this.taskService.taskRestore(task.id);
+    });
   }
 
   permDelete(id: number) {
